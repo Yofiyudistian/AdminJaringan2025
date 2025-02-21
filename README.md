@@ -11,6 +11,7 @@
 ### **1. Analisis HTTP Traffic**
 
 #### **a. IP Server dan Client**
+![]()
 - **IP Server:** `65.208.228.223`
 - **IP Client:** `145.254.160.237`
 - **IP Iklan:** `216.239.59.99` (terdeteksi sebagai iklan berdasarkan informasi di Wireshark pada kolom info yang mencantumkan "ads").
