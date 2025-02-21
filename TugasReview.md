@@ -52,8 +52,8 @@ Jadi, total waktu yang dibutuhkan untuk transfer dan response adalah **3.935659 
 
 Pada gambar, terlihat **node-to-node communication** yang terjadi pada lapisan **Data Link (Layer 2)** dalam **OSI Model**. Proses ini menggunakan **MAC (Media Access Control)** untuk identifikasi, dengan protokol seperti **Ethernet, WiFi, atau Frame Relay**.
 
-- **Router ke Router:** Menggunakan protokol **Data Link** untuk komunikasi antar node.
-- **Host to Host:** Terjadi di **Transport Layer (Layer 4)** dengan menggunakan alamat **IP**. Protokol yang digunakan antara lain **IP, ICMP, TCP, dan UDP**.
+- **Router ke Router:** Menggunakan protokol **Data Link** untuk komunikasi antar node. Biasanya menggunakan mac. protokol yang dipakai ethernet, wifi, atau frame relay.
+- **Host to Host:** Terjadi di **Transport Layer (Layer 4)** dengan menggunakan alamat **IP**. Protokol yang digunakan antara lain **IP, ICMP, TCP, dan UDP**. Biasanya terjadi antara komputer client dan komputer server.
 - **Process to Process:** Terjadi di **Transport dan Application Layer (Layer 4 & 7)** dengan menggunakan **port number** untuk komunikasi antar aplikasi, serta memanfaatkan protokol **TCP dan UDP** untuk pengiriman data dari komputer klien ke server.
 
 ---
