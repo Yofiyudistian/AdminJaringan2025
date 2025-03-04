@@ -1,3 +1,11 @@
+# **WORKSHOP ADMINISTRASI JARINGAN**
+
+**NAMA:** YOFI YUDISTIAN  
+**NRP:** 3123600010  
+**KELAS:** 2 D4 TEKNIK INFORMATIKA A  
+
+#
+
 **Chapter 4: Proses control**
 
 **Proses control** terdiri dari sebuah address space dan sekumpulan struktur data didalam kernel. Address space adalah sekumpulan halaman memori yang ditandai oleh kernel untuk proses penggunaan. (Halaman adalah unit dimana memori di kelola, biasanya berukuran 4Kib atau 8Kib). Halaman digunakan untuk menyimpan kode, data, tumpukan proses.
