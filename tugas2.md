@@ -304,18 +304,12 @@ Perintah chmod mengubah mode dari sebuah file. Anda dapat menggunakan notasi okt
 
 Contoh chmod
 
-| specifier | meaning |
-
-|-------|------|-----------|
-
+| **Specifier** | **Meaning** |
+| --- | --- |
 | u+w | add write permission for the files owner |
-
 | ug=rw,o=r | gives r/w permission to owner & group, and r permission to others |
-
 | a-x | remove execute permission for all users |
-
 | ug=srx,o= | set the setuid, setgid, and sticky bits for owner and group (r/x) |
-
 | g=u | make the groups permission the same as the owners |
 
 Tips: Anda juga dapat menentukan mode yang akan ditetapkan dengan menyalin mode dari file lain dengan opsi --reference. (contoh: chmod --reference = file sumber file target)
