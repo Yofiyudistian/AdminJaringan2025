@@ -314,7 +314,7 @@ Contoh chmod
 
 | a-x | remove execute permission for all users |
 
-|ug=srx,o= | set the setuid, setgid, and sticky bits for owner and group (r/x) |
+| ug=srx,o= | set the setuid, setgid, and sticky bits for owner and group (r/x) |
 
 | g=u | make the groups permission the same as the owners |
 
