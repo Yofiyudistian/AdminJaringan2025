@@ -67,7 +67,8 @@ Sekitar tiga puluh jenis yang berbeda didefinisikan, dan mereka digunakan dalam 
 - Mereka dapat dikirim oleh kernel ketika sebuah proses melakukan pelanggaran seperti pembagian dengan nol.
 - Mereka dapat dikirim oleh kernel untuk memberitahukan sebuah proses tentang sebuah kondisi yang “menarik” seperti matinya sebuah proses anak atau tersedianya data pada sebuah saluran I/O.
 
-![Signals]()
+![image](https://github.com/user-attachments/assets/52030f93-fbcf-4650-9f7c-0d2b4cf0157d)
+
 
 Sinyal KILL, INT, TERM, HUP, dan QUIT terdengar seolah-olah memiliki arti yang kurang lebih sama, tetapi penggunaannya sebenarnya sangat berbeda.
 
@@ -101,41 +102,48 @@ ps dapat menampilkan PID, UID, prioritas, dan terminal kontrol proses. Ia juga m
 
 Anda dapat memperoleh gambaran umum yang berguna dari sistem dengan menjalankan ps aux. Opsi a memberitahu ps untuk menampilkan proses dari semua pengguna, dan opsi u memberitahu ps untuk memberikan informasi rinci tentang setiap proses. Opsi x memerintahkan ps untuk menampilkan proses yang tidak berhubungan dengan terminal.
 
-![]()
 
-![process-explanation]()
+![image](https://github.com/user-attachments/assets/b58f075b-7670-499a-927b-c35a74747ada)
+![image](https://github.com/user-attachments/assets/71b34bb5-53a0-4321-8bb1-4801ae438491)
+
 
 Satu set argumen lain yang berguna adalah lax, yang memberikan lebih banyak informasi teknis tentang proses. lax sedikit lebih cepat daripada aux karena tidak perlu menyelesaikan nama pengguna dan grup.
 
-![]()
+![image](https://github.com/user-attachments/assets/e7424c6a-4045-4d9b-a1e2-ce463f156ff3)
+
 
 Untuk mencari proses tertentu, Anda dapat menggunakan grep untuk memfilter keluaran ps.
 
 $ ps aux | grep -v grep | grep firefox
 
-![]()
+![image](https://github.com/user-attachments/assets/c1a4e9fe-d384-4e86-ae21-0cdc9030b7bf)
+
 
 Kita dapat menentukan PID dari sebuah proses dengan menggunakan pgrep.
 
 $ pgrep firefox
 
-![]()
+![image](https://github.com/user-attachments/assets/d06daf1e-7db1-4bbe-8203-8e80893777a5)
+
 
 atau pidof.
 
 $ pidof /usr/bin/firefox
 
-![]()
+![image](https://github.com/user-attachments/assets/46783de7-4daf-46a1-aaa9-18afb753fd84)
+
 
 **Interactive monitoring with top**
 
 Perintah top menyediakan tampilan real-time yang dinamis dari sistem yang sedang berjalan. Perintah ini dapat menampilkan informasi ringkasan sistem serta daftar proses atau thread yang saat ini dikelola oleh kernel Linux. Jenis informasi ringkasan sistem yang ditampilkan serta jenis, urutan, dan ukuran informasi yang ditampilkan untuk proses, semuanya dapat dikonfigurasi oleh pengguna dan konfigurasi tersebut dapat dipertahankan selama proses restart. Secara default, tampilan diperbarui setiap 1-2 detik, tergantung pada sistem.
 
-![]()
+![image](https://github.com/user-attachments/assets/2a66ec1b-ab89-4ce3-a70e-034f82ee9e8a)
+
 
 Ada juga perintah htop, yang merupakan penampil proses interaktif untuk sistem Unix. Ini adalah aplikasi mode teks (untuk konsol atau terminal X) dan membutuhkan ncurses. Ini mirip dengan top, tetapi memungkinkan Anda untuk menggulir secara vertikal dan horizontal, sehingga Anda dapat melihat semua proses yang berjalan pada sistem, bersama dengan baris perintah lengkapnya. htop juga memiliki antarmuka pengguna yang lebih baik dan lebih banyak pilihan untuk operasi.
 
-![]()
+![image](https://github.com/user-attachments/assets/e1e67faa-fa12-4ed2-9883-1b6a325c335d)
+
 
 **Nice dan renice: change proses priority**
 
@@ -171,7 +179,8 @@ Nilai default dari nice value adalah 0. Semakin rendah nilai nice value, semakin
 
 Versi Linux ps dan top membaca informasi status proses dari direktori /proc, sebuah sistem berkas semu di mana kernel menampilkan berbagai informasi menarik tentang status sistem. Terlepas dari namanya, /proc berisi informasi lain selain proses (statistik yang dihasilkan oleh sistem, dll). Proses diwakili oleh direktori dalam /proc, dan setiap proses memiliki direktori yang diberi nama sesuai dengan PID-nya. Direktori /proc berisi berbagai macam berkas yang menyediakan informasi tentang proses, seperti baris perintah, variabel lingkungan, deskriptor berkas, dan sebagainya.
 
-![process-information]()
+![image](https://github.com/user-attachments/assets/22c0cc72-6b67-4ee1-8363-1d4b16635610)
+
 
 **Strace dan truss**
 
@@ -185,7 +194,8 @@ Kita dapat menyelidiki penyebab proses runaway dengan menggunakan strace atau tr
 
 lsof -p pid
 
-![yoo]()
+![image](https://github.com/user-attachments/assets/5b815974-0ada-4449-9421-493e4849c54c)
+
 
 **Periodic processes**
 
@@ -248,7 +258,8 @@ Sistem berkas terdiri dari potongan-potongan yang lebih kecil - disebut juga “
 
 Pada kebanyakan situasi, sistem berkas dilekatkan pada pohon berkas dengan perintah mount. Perintah mount memetakan direktori di dalam pohon berkas yang ada, yang disebut titik mount, ke root dari sistem berkas yang baru. linux mempunyai opsi lazy unmount (umount -l) yang menghapus filesystem dari penamaan hierarki tetapi tidak benar-benar melepaskannya sampai tidak lagi digunakan. umount -f adalah unmount paksa, yang berguna ketika filesystem sibuk. Daripada langsung menggunakan umount -f, kita dapat menggunakan lsof atau fuser untuk mencari tahu proses yang menggunakan filesystem dan menghentikan proses-proses tersebut.
 
-![]()
+![image](https://github.com/user-attachments/assets/65c4980a-44db-47ee-9654-848d5c95650b)
+
 **Organization of the file tree**
 
 Sistem UNIX tidak pernah terorganisir dengan baik! Berbagai konvensi penamaan yang tidak kompatibel digunakan secara bersamaan, dan berbagai jenis file tersebar secara acak di sekitar ruang nama. Itulah sebabnya mengapa sulit untuk mengupgrade sistem operasi.Sistem berkas root mencakup setidaknya direktori root dan sekumpulan file dan subdirektori minimal. File yang berisi kernel OS biasanya berada di bawah /boot, tetapi nama dan lokasi yang tepat dapat bervariasi. Pada BSD dan beberapa sistem UNIX lainnya, kernel bukanlah sebuah file tunggal melainkan sekumpulan komponen.
@@ -257,11 +268,13 @@ Sistem UNIX tidak pernah terorganisir dengan baik! Berbagai konvensi penamaan ya
 
 /usr dan /var juga sangat penting. /usr adalah tempat penyimpanan program-program standar-tetapi-tidak-kritis-sistem yang paling penting, bersama dengan berbagai berkas lain seperti manual on-line dan sebagian besar pustaka. FreeBSD menyimpan cukup banyak konfigurasi locql di bawah /usr/local. /var menyimpan direktori spool, file log, informasi akuntansi, dan berbagai item lain yang berkembang atau berubah dengan cepat dan bervariasi pada setiap host. Baik /usr dan /var harus tersedia agar sistem dapat masuk ke modus multiuser.
 
-![pathnames]()
+![image](https://github.com/user-attachments/assets/0ccb7dde-67cd-478c-8522-15656fcd0587)
+
 
 **File types**
 
-![file-type-encoding]()
+![image](https://github.com/user-attachments/assets/25b8560d-2acc-49f7-8d98-d55b66a99b8b)
+
 
 Implementasi filesystem didefinisikan jadi 7 tipe:
 
@@ -276,11 +289,12 @@ Implementasi filesystem didefinisikan jadi 7 tipe:
 
 Pada model sistem berkas Unix dan Linux, setiap berkas memiliki satu set sembilan bit hak akses, yang menentukan siapa yang dapat membaca, menulis, dan mengeksekusi berkas tersebut. Bersama dengan tiga bit lainnya yang terutama mempengaruhi operasi program yang dapat dieksekusi, bit-bit ini merupakan mode file. Kedua belas bit mode ini disimpan bersama dengan empat bit informasi tipe file. Empat bit tipe file ditetapkan ketika file dibuat dan tidak dapat diubah, tetapi pemilik file dan superuser dapat memodifikasi dua belas bit mode dengan perintah chmod.
 
-![contoh]()
+![image](https://github.com/user-attachments/assets/06ca186c-307f-48f8-bcf0-c21f076dd440)
+
 
 Bit-bit izin dibagi menjadi tiga kelompok yang masing-masing terdiri dari tiga bit. Kelompok pertama yang terdiri dari tiga bit adalah untuk pemilik berkas, kelompok kedua untuk grup berkas, dan kelompok ketiga untuk semua orang. Anda juga dapat menggunakan notasi oktal (basis 8) karena setiap digit dalam notasi oktal mewakili tiga bit. Tiga bit paling atas (dengan nilai oktal 400, 200, dan 100) mewakili pemilik berkas, tiga bit tengah (dengan nilai oktal 40, 20, dan 10) mewakili grup berkas, dan tiga bit paling bawah (dengan nilai oktal 4, 2, dan 1) mewakili semua orang.
 
-S**etuid (Set User ID)** (s pada permission user)
+**Setuid (Set User ID)** (s pada permission user)
 
 - Jika diterapkan pada file eksekusi, file akan berjalan dengan hak akses pemilik file, bukan pengguna yang menjalankan.
 - Contoh: /usr/bin/passwd menggunakan Setuid agar pengguna biasa bisa mengubah password tanpa akses root.
@@ -303,7 +317,8 @@ Perintah ls mencantumkan daftar file dan direktori. Perintah ini juga dapat digu
 
 **Chmod: change permissions**
 
-![permissions-encoding]()
+![image](https://github.com/user-attachments/assets/350b3148-20dc-43eb-9216-194c28fdac53)
+
 
 Perintah chmod mengubah mode dari sebuah file. Anda dapat menggunakan notasi oktal atau notasi simbolik.
 
