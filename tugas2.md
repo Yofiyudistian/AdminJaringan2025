@@ -1,23 +1,3 @@
-2 Maret 2025
-
-**LAPORAN**
-
-Mata kuliah Workshop Administrasi Jaringan
-
-![]()
-
-Nama dosen pengampu:
-
-Pak Dr Ferry Astika Saputra ST, M.Sc
-
-Dikerjakan oleh
-
-Nama : Yofi Yudistian
-
-NRP : 3123600010
-
-Kelas :  2 D4 IT A
-
 **Chapter 4: Proses control**
 
 **Proses control** terdiri dari sebuah address space dan sekumpulan struktur data didalam kernel. Address space adalah sekumpulan halaman memori yang ditandai oleh kernel untuk proses penggunaan. (Halaman adalah unit dimana memori di kelola, biasanya berukuran 4Kib atau 8Kib). Halaman digunakan untuk menyimpan kode, data, tumpukan proses.
