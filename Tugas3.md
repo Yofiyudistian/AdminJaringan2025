@@ -9,14 +9,18 @@ Install NTP dengan perintah:
 ```bash
 sudo apt install ntp
 ```
+![image](https://github.com/user-attachments/assets/0c257675-0c1e-4933-a2cc-5af1a8fa4871)
 
-### 2. Buka File Konfigurasi NTP
+
+### Buka File Konfigurasi NTP
 
 ```bash
 sudo nano /etc/ntp.conf
 ```
+![image](https://github.com/user-attachments/assets/aa4f8d9f-e896-479c-b4db-9aff5bf1055f)
 
-### 3. Ubah Nama NTP Server ke Server Indonesia
+
+### 2. Ubah Nama NTP Server ke Server Indonesia
 
 Dari:
 
@@ -35,19 +39,23 @@ server 1.id.pool.ntp.org
 server 2.id.pool.ntp.org
 server 3.id.pool.ntp.org
 ```
+![image](https://github.com/user-attachments/assets/cf0239c5-d534-4470-a75e-026cd1a99b10)
 
-### 4. Restart dan Aktifkan NTP
+
+### Restart dan Aktifkan NTP
 
 ```bash
 sudo systemctl restart ntp
 sudo systemctl enable ntp
 ```
 
-### 5. Verifikasi Waktu dengan Perintah
+### Verifikasi Waktu dengan Perintah
 
 ```bash
 ntpq -p
 ```
+![image](https://github.com/user-attachments/assets/c9384b76-1e5f-49fd-86bc-56cbbb5e1069)
+
 
 #### Referensi:
 - [Server-World: NTP di Debian](https://www.server-world.info/en/note?os=Debian_12&p=ntp&f=1)
@@ -68,6 +76,8 @@ sudo apt install -y samba smbclient cifs-utils
 - `samba` untuk berbagi file di Ubuntu
 - `smbclient` untuk mengakses folder bersama dari sistem lain
 - `cifs-utils` untuk memount folder SMB dari Windows atau server lain
+![image](https://github.com/user-attachments/assets/d3dde38b-3330-40e0-b50f-e06903b67d72)
+
 
 #### Buat Folder untuk Public Share
 
@@ -76,6 +86,8 @@ sudo mkdir -p /srv/samba/publicAdmin
 sudo chmod 777 /srv/samba/publicAdmin
 sudo chown nobody:nogroup /srv/samba/publicAdmin
 ```
+![image](https://github.com/user-attachments/assets/f78d1558-922f-4ee8-9964-b98ab4e87885)
+
 
 #### Edit File Konfigurasi Samba
 
@@ -94,6 +106,8 @@ guest ok = yes
 create mask = 0777 
 directory mask = 0777
 ```
+![image](https://github.com/user-attachments/assets/fc4b143c-1bd4-4dcb-8693-42f527e9e676)
+
 
 #### Restart dan Cek Status Samba
 
@@ -101,8 +115,10 @@ directory mask = 0777
 sudo systemctl restart smbd
 sudo systemctl status smbd
 ```
+![image](https://github.com/user-attachments/assets/ad05884b-1354-4e0a-aec6-93bb78685405)
 
-#### Cek IP Address
+
+#### Untuk linux cek IP Address
 
 ```bash
 ip a
@@ -144,7 +160,7 @@ sudo nano /etc/samba/smb.conf
 
 Tambahkan konfigurasi berikut:
 
-```ini
+```
 [Limited]
    path = /srv/samba/limited
    browseable = no
@@ -175,8 +191,12 @@ smbclient //192.168.188.94/Limited -U smbuser
 ```bash
 ip a
 ```
+![image](https://github.com/user-attachments/assets/fe3894d0-2bdd-4be4-82a4-6f2543f73c79)
 
-#### Cek Shared Folder di Windows (Pastikan Satu Jaringan), Lalu Akses dengan IP yang Sesuai
+
+#### Cek network di Windows (Pastikan Satu Jaringan), Lalu Akses dengan IP yang Sesuai
+![image](https://github.com/user-attachments/assets/4b67dcdb-2497-4ff1-af90-4b1d9a1ef3f2)
+
 
 #### Akses dari Linux
 
@@ -212,6 +232,8 @@ smb: \> ls
 
   19480400 blocks of size 1024. 12861968 blocks available
 ```
+### Hasilnya
+![image](https://github.com/user-attachments/assets/937f489c-c165-46f7-acc9-c64fa83ee699)
 
 ---
 
