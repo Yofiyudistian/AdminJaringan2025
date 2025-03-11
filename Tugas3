@@ -1,0 +1,5 @@
+# 🕒 Instalasi & Konfigurasi NTP Client (Sinkronisasi Waktu dengan Server Indonesia)
+
+## 1. Instalasi Paket NTP
+```bash
+sudo apt install ntp
