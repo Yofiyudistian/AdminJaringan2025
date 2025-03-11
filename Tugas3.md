@@ -1,161 +1,221 @@
-# **WORKSHOP ADMINISTRASI JARINGAN**
+# Instalasi NTP Client dan Samba di Linux
 
-**NAMA:** YOFI YUDISTIAN  
-**NRP:** 3123600010  
-**KELAS:** 2 D4 TEKNIK INFORMATIKA A  
+## A. Instalasi NTP Client
 
-#
-A. Instalasi NTP Client
-
-1. Install dan Konfigurasi NTP Client
-
-Menginstall dan mengkonfigurasi NTP client agar host memiliki waktu yang sinkron dengan NTP server di Indonesia.
-
-Langkah-langkah:
+### 1. Install dan Konfigurasi NTP Client
 
 Install NTP dengan perintah:
 
+```bash
 sudo apt install ntp
+```
 
-Buka file konfigurasi NTP:
+### 2. Buka File Konfigurasi NTP
 
+```bash
 sudo nano /etc/ntp.conf
+```
 
-Ubah konfigurasi default dengan server NTP Indonesia dari https://www.ntppool.org/en/zone/id:
+### 3. Ubah Nama NTP Server ke Server Indonesia
 
+Dari:
+
+```bash
+#pool 0.ubuntu.pool.ntp.org iburst
+#pool 1.ubuntu.pool.ntp.org iburst
+#pool 2.ubuntu.pool.ntp.org iburst
+#pool 3.ubuntu.pool.ntp.org iburst
+```
+
+Menjadi:
+
+```bash
 server 0.id.pool.ntp.org
 server 1.id.pool.ntp.org
 server 2.id.pool.ntp.org
 server 3.id.pool.ntp.org
+```
 
-Restart & aktifkan NTP dengan perintah:
+### 4. Restart dan Aktifkan NTP
 
+```bash
 sudo systemctl restart ntp
 sudo systemctl enable ntp
+```
 
-Verifikasi waktu dengan perintah:
+### 5. Verifikasi Waktu dengan Perintah
 
+```bash
 ntpq -p
+```
 
-Referensi:
+#### Referensi:
+- [Server-World: NTP di Debian](https://www.server-world.info/en/note?os=Debian_12&p=ntp&f=1)
+- [NTP Pool Server Indonesia](https://www.ntppool.org/en/zone/id)
 
-Server World - NTP
+---
 
-NTP Pool
+## B. Instalasi dan Konfigurasi Samba
 
-B. Instalasi dan Konfigurasi Samba
+### 1. Membuat Public Shared Folder
 
-1. Membuat Public Shared Folder
+#### Install Samba dan Paket Terkait
 
-Membuat folder publik yang bisa diakses melalui Windows dan Linux Client via file manager.
-
-Langkah-langkah:
-
-Install Samba dan dependensinya:
-
+```bash
 sudo apt install -y samba smbclient cifs-utils
+```
 
-Buat folder untuk shared public:
+- `samba` untuk berbagi file di Ubuntu
+- `smbclient` untuk mengakses folder bersama dari sistem lain
+- `cifs-utils` untuk memount folder SMB dari Windows atau server lain
 
+#### Buat Folder untuk Public Share
+
+```bash
 sudo mkdir -p /srv/samba/publicAdmin
 sudo chmod 777 /srv/samba/publicAdmin
 sudo chown nobody:nogroup /srv/samba/publicAdmin
+```
 
-Edit konfigurasi Samba:
+#### Edit File Konfigurasi Samba
 
+```bash
 sudo nano /etc/samba/smb.conf
+```
 
-Tambahkan di akhir file:
+Tambahkan konfigurasi di akhir file:
 
+```ini
 [Public] 
-path = /srv/samba/publicAdmin
-browseable = yes
-writable = yes
-guest ok = yes
-create mask = 0777
+path = /srv/samba/publicAdmin 
+browseable = yes 
+writable = yes 
+guest ok = yes 
+create mask = 0777 
 directory mask = 0777
+```
 
-Restart Samba dan cek statusnya:
+#### Restart dan Cek Status Samba
 
+```bash
 sudo systemctl restart smbd
 sudo systemctl status smbd
+```
 
-Untuk Linux, buat file untuk uji coba dengan:
+#### Cek IP Address
 
-nano tes
-
-Cek IP address dengan:
-
+```bash
 ip a
+```
 
-Verifikasi dengan:
+#### Cek Folder yang Di-share
 
+```bash
 smbclient -L //192.168.188.94/Public -N
+```
 
-2. Membuat Limited Shared Folder
+---
 
-Membuat folder dengan akses terbatas hanya untuk user tertentu.
+### 2. Membuat Limited Shared Folder
 
-Langkah-langkah:
+#### Buat Folder dan Tentukan Pemilik
 
-Buat folder dan set pemilik:
-
+```bash
 sudo mkdir -p /srv/samba/limited
 sudo chmod 770 /srv/samba/limited
 sudo chown nobody:sambashare /srv/samba/limited
+```
 
-Tambahkan user Samba:
+#### Tambah User di Samba
 
+```bash
 sudo useradd -M -s /sbin/nologin smbuser
 sudo passwd smbuser
 sudo smbpasswd -a smbuser
 sudo smbpasswd -e smbuser
 sudo usermod -aG sambashare smbuser
+```
 
-Edit konfigurasi Samba:
+#### Edit File Konfigurasi Samba
 
+```bash
 sudo nano /etc/samba/smb.conf
+```
 
-Tambahkan:
+Tambahkan konfigurasi berikut:
 
+```ini
 [Limited]
-path = /srv/samba/limited
-browseable = no
-writable = yes
-valid users = smbuser
-create mask = 0770
-directory mask = 0770
+   path = /srv/samba/limited
+   browseable = no
+   writable = yes
+   valid users = smbuser
+   create mask = 0770
+   directory mask = 0770
+```
 
-Restart Samba:
+#### Restart Samba
 
+```bash
 sudo systemctl restart smbd
+```
 
-Coba akses folder dari Linux dengan:
+#### Akses Limited Shared Folder dari Linux
 
+```bash
 smbclient //192.168.188.94/Limited -U smbuser
+```
 
-Referensi:Server World - Samba
+---
 
-# Administrasi Sistem Debian 12
+### 3. Akses ke Folder Share dari CLI Client
 
-## Sumber Perangkat Lunak
-Debian menggunakan repositori untuk mendistribusikan aplikasi. Alamat repositori disimpan dalam file `/etc/apt/sources.list`. File ini dapat diedit menggunakan perintah seperti `apt edit-sources` atau editor teks seperti `nano`.
+#### Cek IP Address
 
-- **`deb`**: Repositori biner (perangkat lunak yang sudah dikompilasi).
-- **`deb-src`**: Repositori sumber (kode program untuk dikompilasi).
-- **`bookworm`**: Nama versi Debian 12 yang saat ini stabil.
+```bash
+ip a
+```
 
-Repositori Debian dibagi menjadi beberapa bagian:
-- **`main`**: Perangkat lunak bebas yang memenuhi DFSG (Debian Free Software Guidelines).
-- **`non-free-firmware`**: Firmware non-bebas yang disertakan sejak Debian 12.
-- **`contrib`**: Perangkat lunak bebas dengan dependensi non-bebas.
-- **`non-free`**: Perangkat lunak yang tidak memenuhi DFSG.
+#### Cek Shared Folder di Windows (Pastikan Satu Jaringan), Lalu Akses dengan IP yang Sesuai
 
-## Paket Backport
-Backport adalah mekanisme untuk membawa versi terbaru aplikasi dari repositori pengembangan ke versi stabil. Repositori backport tidak diaktifkan secara default, tetapi aman digunakan.
+#### Akses dari Linux
 
-## Memodifikasi Repositori
-Anda dapat memodifikasi file `/etc/apt/sources.list` untuk menambahkan repositori non-bebas atau backport. Perubahan ini dapat dilakukan melalui terminal atau menggunakan manajer paket grafis seperti **Synaptic**.
+```bash
+smbclient -L //192.168.188.94/Public -N
+```
 
-## APT di Terminal
-APT (**Advanced P
+#### Hasilnya Akan Terlihat Seperti Ini:
+
+```
+Sharename    Type    Comment
+---------    ----    -------
+print$       Disk    Printer Drivers
+Public       Disk
+IPC$         IPC     IPC Service (Samba 4.17.12-Debian)
+nobody       Disk    Home Directories
+SMB1 disabled -- no workgroup available
+```
+
+#### Akses Folder Public
+
+```bash
+smbclient //192.168.188.94/Public -N
+```
+
+#### Lihat Isi Folder
+
+```bash
+smb: \> ls
+  .                               D       0  Mon Mar 10 14:36:02 2025
+  ..                              D       0  Mon Mar 10 14:33:53 2025
+  tes                             N      11  Mon Mar 10 14:35:59 2025
+
+  19480400 blocks of size 1024. 12861968 blocks available
+```
+
+---
+
+### Referensi:
+- [Server-World: Samba di Debian](https://www.server-world.info/en/note?os=Debian_12&p=samba&f=1)
+- Package terkait: `samba`, `smbclient`, `cifs-tools`
+
