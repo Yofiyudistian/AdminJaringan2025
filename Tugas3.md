@@ -219,3 +219,73 @@ smb: \> ls
 - [Server-World: Samba di Debian](https://www.server-world.info/en/note?os=Debian_12&p=samba&f=1)
 - Package terkait: `samba`, `smbclient`, `cifs-tools`
 
+## Administrasi Sistem Debian 12
+## Sumber Perangkat Lunak
+Debian menggunakan repositori untuk mendistribusikan aplikasi. Alamat repositori disimpan dalam file `/etc/apt/sources.list`. File ini dapat diedit menggunakan perintah seperti `apt edit-sources` atau editor teks seperti `nano`.
+
+- **`deb`**: Repositori biner (perangkat lunak yang sudah dikompilasi).
+- **`deb-src`**: Repositori sumber (kode program untuk dikompilasi).
+- **`bookworm`**: Nama versi Debian 12 yang saat ini stabil.
+
+Repositori Debian dibagi menjadi beberapa bagian:
+- **`main`**: Perangkat lunak bebas yang memenuhi DFSG (Debian Free Software Guidelines).
+- **`non-free-firmware`**: Firmware non-bebas yang disertakan sejak Debian 12.
+- **`contrib`**: Perangkat lunak bebas dengan dependensi non-bebas.
+- **`non-free`**: Perangkat lunak yang tidak memenuhi DFSG.
+
+## Paket Backport
+Backport adalah mekanisme untuk membawa versi terbaru aplikasi dari repositori pengembangan ke versi stabil. Repositori backport tidak diaktifkan secara default, tetapi aman digunakan.
+
+## Memodifikasi Repositori
+Anda dapat memodifikasi file `/etc/apt/sources.list` untuk menambahkan repositori non-bebas atau backport. Perubahan ini dapat dilakukan melalui terminal atau menggunakan manajer paket grafis seperti **Synaptic**.
+
+## APT di Terminal
+APT (**Advanced Package Tool**) adalah alat utama untuk mengelola paket di Debian. Beberapa perintah dasar:
+```sh
+apt update        # Memperbarui metadata repositori
+apt install <paket>  # Menginstal paket
+apt upgrade       # Memperbarui paket yang terinstal
+apt remove <paket>  # Menghapus paket
+apt autoremove    # Menghapus paket yang tidak diperlukan
+```
+
+## Software: Manajer Paket Sederhana
+**Software** adalah antarmuka grafis sederhana untuk mengelola aplikasi di Debian. Fitur utamanya meliputi:
+- Pencarian dan instalasi aplikasi.
+- Pembaruan sistem.
+- Manajemen repositori.
+
+## Discover: Manajer Paket KDE
+**Discover** adalah manajer paket untuk lingkungan desktop KDE. Memungkinkan pengguna untuk mencari, menginstal, dan memperbarui aplikasi dengan antarmuka yang intuitif.
+
+## Synaptic: Manajer Paket Komprehensif
+**Synaptic** adalah antarmuka grafis yang lebih detail untuk mengelola paket. Ini menampilkan semua paket yang tersedia, termasuk library dan dependensi. Fitur utamanya meliputi:
+- Pencarian paket.
+- Instalasi dan penghapusan paket.
+- Pembersihan paket yang tidak diperlukan.
+
+## Membersihkan Sistem
+Beberapa cara untuk membersihkan sistem:
+```sh
+apt clean                 # Membersihkan cache paket
+apt autoremove --purge    # Menghapus paket yang tidak diperlukan beserta file konfigurasinya
+deborphan                 # Menemukan dan menghapus paket yang tidak terpakai
+```
+
+## Menginstal Paket Eksternal `.deb`
+Paket `.deb` dapat diinstal menggunakan:
+- **GDebi**: Antarmuka grafis untuk menginstal paket `.deb` dengan manajemen dependensi.
+- **dpkg**: Alat terminal untuk menginstal paket `.deb`, tetapi tidak mengelola dependensi secara otomatis:
+  ```sh
+  dpkg -i nama_paket.deb
+  apt -f install  # Menginstal dependensi yang hilang
+  ```
+
+## Menginstal Aplikasi Flatpak
+Flatpak adalah sistem virtualisasi untuk menjalankan aplikasi dalam lingkungan terisolasi (**sandbox**). Beberapa langkah untuk menggunakan Flatpak:
+```sh
+apt install flatpak  # Instal Flatpak
+flatpak remote-add flathub https://flathub.org/repo/flathub.flatpakrepo  # Tambahkan repositori Flathub
+```
+Kelola Flatpak melalui terminal atau manajer paket grafis seperti **Software (Gnome)** dan **Discover (KDE)**.
+
