@@ -1,5 +1,365 @@
-# 🕒 Instalasi & Konfigurasi NTP Client (Sinkronisasi Waktu dengan Server Indonesia)
 
-## 1. Instalasi Paket NTP
-```bash
-sudo apt install ntp
+
+1. Instalasi NTP Client
+2. Install dan konfigurasi NTP client agar host anda mempunyai Waktu yang sinkron dengan NTP server di Indonesia.
+
+![]()
+
+Melakukan install ntp dengan perintah
+
+Sudo apt install ntp
+
+![]()
+
+Buka file konfigurasi NTP pakai perintah
+
+sudo nano /etc/ntp.conf
+
+1. nama NTP server yang harus dirujuk adalah ntp server Indonesia
+
+![]()
+
+Ubah
+
+# pool 0.ubuntu.pool.ntp.org iburst
+
+# pool 1.ubuntu.pool.ntp.org iburst
+
+# pool 2.ubuntu.pool.ntp.org iburst
+
+# pool 3.ubuntu.pool.ntp.org iburst
+
+Dengan server Indonesia dari <https://www.ntppool.org/en/zone/id>
+
+server 0.id.pool.ntp.org
+
+server 1.id.pool.ntp.org
+
+server 2.id.pool.ntp.org
+
+server 3.id.pool.ntp.org
+
+restart & aktifkan ntp dengan perintah
+
+sudo systemctl restart ntp
+
+sudo systemctl enable ntp
+
+verifikasi waktu pakai perintah
+
+ntpq –p
+
+![]()
+
+Referensi:
+
+1. <https://www.server-world.info/en/note?os=Debian_12&p=ntp&f=1>
+2. <https://www.ntppool.org/en/zone/id> Package terkait : ntp ntpssec
+3. Instalasi dan konfigurasi Samba
+4. Membuat public shared folder . Folder tersebut haru bisa diakses melalui Windows Client dan Linux Client via file manager
+
+Install samba dengan 3 paket sekaligus pakai perintah
+
+Sudo apt install –y samba smbclient cifs-utils
+
+- Samba untuk berbagi file diubuntu
+- Smbclient untuk mengakses folder bersama dari sistem lain
+- Cifs-utils untuk memount folder smb dari windows atau server lain
+
+![]()
+
+Buat folder untuk share public pakai perintah
+
+Sudo mkdir – p /srv/samba/publicAdmin
+
+Sudo chmod 777 /srv/samba/publicAdmin
+
+Sudo chown nobody:nogroup /srv/samba/publicAdmin
+
+![]()
+
+Edit file konfigurasi samba dengan
+
+Sudo nano /etc/samba/smb.conf
+
+![]()
+Lalu tambahkan konfigurasi diakhir file
+
+\[Public\]
+
+path = /srv/samba/public
+
+browseable = yes
+
+writable = yes
+
+guest ok = yes
+
+create mask = 0777
+
+directory mask = 0777
+
+restart dan cek status samba pakai
+
+sudo systemctl restart smbd
+
+sudo systemctl status smbd
+
+![]()
+
+Untuk linux pakai perintah
+
+nano tes
+
+untuk buat file
+
+ip a
+
+untuk cek ip address
+
+yofi@DEKSTOP-S3G705J:/srv/samba/publicAdmin$ ip a
+
+1: 10: &lt;LOOPBACK, UP, LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+
+inet 127.0.0.1/8 scope host lo
+
+valid_lft forever preferred_lft forever
+
+inet6 :: 1/128 scope host noprefixroute
+
+valid_lft forever preferred_lft forever
+
+2: enp0s3: &lt;BROADCAST, MULTICAST, UP, LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+
+link/ether 08:00:27:1c:0c:07 brd ffffffffff:ff
+
+inet 192.168.188.94/24 brd 192.168.188.255 scope global dynamic noprefixroute enp0s3
+
+valid_lft 1309sec preferred_lft 1309sec
+
+inet6 fe80::a00:27ff:fe1c:c07/64 scope link noprefixroute
+
+valid_lft forever preferred_lft forever
+
+untuk mengecek file yang didhare pakai perintah
+
+smbclient -L //192.168.188.94/Public -N
+
+1. Membuat limited shared Folder.
+
+Buat folder & tentukan pemilik dengan menggunakan
+
+sudo mkdir -p /srv/samba/limited
+
+sudo chmod 770 /srv/samba/limited
+
+sudo chown nobody:sambashare /srv/samba/limited
+
+Tambah user disamba
+
+sudo useradd -M -s /sbin/nologin smbuser
+
+sudo passwd smbuser
+
+sudo smbpasswd -a smbuser
+
+sudo smbpasswd -e smbuser
+
+sudo usermod -aG sambashare smbuser
+
+Konfigurasi samba
+
+sudo nano /etc/samba/smb.conf
+
+tambahkan konfigurasi di filr tersebut
+
+\[Limited\]
+
+path = /srv/samba/limited
+
+browseable = no
+
+writable = yes
+
+valid users = smbuser
+
+create mask = 0770
+
+directory mask = 0770
+
+Restart file samba pakai
+
+sudo systemctl restart smbd
+
+cara untuk masuk ke samba dilinux pada limited folder
+
+smbclient //192.168.188.94/Limited -U smbuser
+
+1. akses ke folder Share dari CLI client
+
+Cek ipnya dengan
+
+ip a
+
+![]()
+
+Lihat di network untuk windows pastikan berada dalam satu jaringan lalu ketik ipnya
+
+![]()
+
+Untuk linux pakai
+
+$ smbclient -L //192.168.188.94/Public -N
+
+Sharename   Type  Comment
+
+\---------   ----  -------
+
+print$      Disk  Printer Drivers
+
+Public      Disk
+
+IPC$        IPC   IPC Service (Samba 4.17.12-Debian)
+
+nobody      Disk  Home Directories
+
+SMB1 disabled -- no workgroup available
+
+$ smbclient //192.168.188.94/Public -N
+
+Try "help" to get a list of possible commands.
+
+smb: \\> ls
+
+&nbsp; .                               D    0  Mon Mar 10 14:36:02 2025
+
+&nbsp; ..                              D    0  Mon Mar 10 14:33:53 2025
+
+&nbsp; tes                             N   11  Mon Mar 10 14:35:59 2025
+
+&nbsp;    19480400 blocks of size 1024. 12861968 blocks available
+
+smb:
+
+hasilnya:
+
+![]()
+
+
+Referensi : <https://www.server-world.info/en/note?os=Debian_12&p=samba&f=1> Package terkait : samba, smbclient, cifs-tools
+
+1. Buat rangkuman tentanag package management. Bahan ada di Materi ethol debian 12 sysadmin) Di tiap nomor buat langkah-langkah instalasi, konfigurasi dan hasil (ouput) dari perintah-perintah terkait yang memastikan layanan dapat digunakan dengan baik
+
+\### \*\*Administrasi Sistem Debian 12\*\*
+
+\#### \*\*8.1 Sumber Perangkat Lunak\*\*
+
+Debian menggunakan repositori untuk mendistribusikan aplikasi. Alamat repositori disimpan dalam file \`/etc/apt/sources.list\`. File ini dapat diedit menggunakan perintah seperti \`apt edit-sources\` atau editor teks seperti \`nano\`.
+
+\- \*\*deb\*\*: Repositori biner (perangkat lunak yang sudah dikompilasi).
+
+\- \*\*deb-src\*\*: Repositori sumber (kode program untuk dikompilasi).
+
+\- \*\*bookworm\*\*: Nama versi Debian 12 yang saat ini stabil.
+
+Repositori Debian dibagi menjadi beberapa bagian:
+
+\- \*\*main\*\*: Perangkat lunak bebas yang memenuhi DFSG (Debian Free Software Guidelines).
+
+\- \*\*non-free-firmware\*\*: Firmware non-bebas yang disertakan sejak Debian 12.
+
+\- \*\*contrib\*\*: Perangkat lunak bebas dengan dependensi non-bebas.
+
+\- \*\*non-free\*\*: Perangkat lunak yang tidak memenuhi DFSG.
+
+\#### \*\*8.1.3 Paket Backport\*\*
+
+Backport adalah mekanisme untuk membawa versi terbaru aplikasi dari repositori pengembangan ke versi stabil. Repositori backport tidak diaktifkan secara default, tetapi aman digunakan.
+
+\#### \*\*8.1.4 Memodifikasi Repositori\*\*
+
+Anda dapat memodifikasi file \`sources.list\` untuk menambahkan repositori non-bebas atau backport. Perubahan ini dapat dilakukan melalui terminal atau menggunakan manajer paket grafis seperti Synaptic.
+
+\---
+
+\### \*\*8.2 APT di Terminal\*\*
+
+APT (Advanced Package Tool) adalah alat utama untuk mengelola paket di Debian. Beberapa perintah dasar:
+
+\- \*\*apt update\*\*: Memperbarui metadata repositori.
+
+\- \*\*apt install\*\*: Menginstal paket.
+
+\- \*\*apt upgrade\*\*: Memperbarui paket yang terinstal.
+
+\- \*\*apt remove\*\*: Menghapus paket.
+
+\- \*\*apt autoremove\*\*: Menghapus paket yang tidak diperlukan.
+
+\---
+
+\### \*\*8.3 Software: Manajer Paket Sederhana\*\*
+
+Software adalah antarmuka grafis sederhana untuk mengelola aplikasi di Debian. Fitur utamanya meliputi:
+
+\- \*\*Pencarian dan instalasi aplikasi\*\*.
+
+\- \*\*Pembaruan sistem\*\*.
+
+\- \*\*Manajemen repositori\*\*.
+
+\---
+
+\### \*\*8.4 Discover: Manajer Paket KDE\*\*
+
+Discover adalah manajer paket untuk lingkungan desktop KDE. Memungkinkan pengguna untuk mencari, menginstal, dan memperbarui aplikasi dengan antarmuka yang intuitif.
+
+\---
+
+\### \*\*8.5 Synaptic: Manajer Paket Komprehensif\*\*
+
+Synaptic adalah antarmuka grafis yang lebih detail untuk mengelola paket. Ini menampilkan semua paket yang tersedia, termasuk library dan dependensi. Fitur utamanya meliputi:
+
+\- \*\*Pencarian paket\*\*.
+
+\- \*\*Instalasi dan penghapusan paket\*\*.
+
+\- \*\*Pembersihan paket yang tidak diperlukan\*\*.
+
+\---
+
+\### \*\*8.6 Membersihkan Sistem\*\*
+
+Beberapa cara untuk membersihkan sistem:
+
+\- \*\*apt clean\*\*: Membersihkan cache paket.
+
+\- \*\*apt autoremove --purge\*\*: Menghapus paket yang tidak diperlukan beserta file konfigurasinya.
+
+\- \*\*deborphan\*\*: Menemukan dan menghapus paket yang tidak terpakai.
+
+\---
+
+\### \*\*8.7 Menginstal Paket Eksternal ".deb"\*\*
+
+Paket \`.deb\` dapat diinstal menggunakan:
+
+\- \*\*GDebi\*\*: Antarmuka grafis untuk menginstal paket \`.deb\` dengan manajemen dependensi.
+
+\- \*\*dpkg\*\*: Alat terminal untuk menginstal paket \`.deb\`, tetapi tidak mengelola dependensi secara otomatis.
+
+\---
+
+\### \*\*8.8 Menginstal Aplikasi Flatpak\*\*
+
+Flatpak adalah sistem virtualisasi untuk menjalankan aplikasi dalam lingkungan terisolasi (sandbox). Beberapa langkah untuk menggunakan Flatpak:
+
+\- \*\*Instal Flatpak\*\*: \`apt install flatpak\`.
+
+\- \*\*Tambahkan repositori Flathub\*\*: \`flatpak remote-add flathub <https://flathub.org/repo/flathub.flatpakrepo\`>.
+
+\- \*\*Kelola Flatpak\*\*: Dapat dilakukan melalui terminal atau manajer paket grafis seperti Software (Gnome) dan Discover (KDE).
+
+\---
