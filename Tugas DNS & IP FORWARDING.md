@@ -32,10 +32,10 @@ Contoh: Jika kamu mengakses website dari laptop di rumahmu, router rumahmu akan 
 
 Setting network adapter 1 menjadi bridge dan adapter 2 menjadi internet.
 
-·  **Adapter 1 = Bridge:**
+·  Adapter 1 = Bridge:
 Agar VM1 bisa terhubung langsung ke jaringan fisik (misalnya internet rumah), seperti layaknya perangkat biasa.
 
-·  **Adapter 2 = Internal:**
+·  Adapter 2 = Internal:
 Digunakan untuk membuat jaringan lokal (LAN) antara VM1 dan VM2, sehingga mereka bisa saling berkomunikasi tanpa keluar ke internet.
 
 ![image](https://github.com/user-attachments/assets/8cf86e80-bfab-4cf9-a14b-7d3ab11041ba)
@@ -46,17 +46,17 @@ Install requirement
 
 Sudo apt install bind9 bind9utils
 
-·  **BIND9**: Software DNS yang paling umum di Linux.
+·  BIND9: Software DNS yang paling umum di Linux.
 
-·  **bind9utils**: Tools tambahan untuk cek konfigurasi DNS.
+·  bind9utils: Tools tambahan untuk cek konfigurasi DNS.
 
 ![image](https://github.com/user-attachments/assets/d367f74b-067e-4eb0-ad0a-8538753e582a)
 
 
 Sudo apt install iptables iptables-persistent
 
-- **iptables**: Untuk mengatur firewall dan routing NAT.
-- **iptables-persistent**: Menyimpan aturan iptables agar tetap aktif setelah reboot.
+- iptables: Untuk mengatur firewall dan routing NAT.
+- iptables-persistent: Menyimpan aturan iptables agar tetap aktif setelah reboot.
 
 ![image](https://github.com/user-attachments/assets/106fc567-6943-4f60-90e0-31d4c30aeb22)
 
@@ -96,11 +96,11 @@ allow-transfer { any; };
 
 recursion yes;
 
-·  **allow-query**: Mengizinkan semua klien untuk meminta DNS.
+·  allow-query: Mengizinkan semua klien untuk meminta DNS.
 
-·  **allow-transfer**: Mengizinkan transfer zona (berguna untuk slave DNS, jika ada).
+·  allow-transfer: Mengizinkan transfer zona (berguna untuk slave DNS, jika ada).
 
-·  **recursion**: Mengaktifkan pencarian DNS berantai (jika VM1 tidak tahu, dia cari tahu ke DNS lain).
+·  recursion: Mengaktifkan pencarian DNS berantai (jika VM1 tidak tahu, dia cari tahu ke DNS lain).
 
 ![image](https://github.com/user-attachments/assets/f08725c9-c5a6-45bc-a37d-51979a7d962f)
 
@@ -112,7 +112,7 @@ Sudo /etc/bind/named.conf.external-zones
 Di sini kita mendefinisikan dua **zone DNS**:
 
 - Satu untuk domain kelompok6.com.
-- Satu lagi untuk **reverse DNS** dari IP 192.168.200.x.
+- Satu lagi untuk reverse DNS dari IP 192.168.200.x.
 
 ![image](https://github.com/user-attachments/assets/cf290274-33cf-41e8-b4f7-e61ab72a30a3)
 
@@ -145,7 +145,7 @@ Untuk memastikan tidak ada error penulisan di file zona
 
 restart named.service
 
-DirEstart agar konfigurasi dns aktif
+Direstart agar konfigurasi dns aktif
 
 ![image](https://github.com/user-attachments/assets/a3d5fe0d-47b8-4948-8ad7-0891a529d01d)
 
@@ -200,7 +200,7 @@ ping vm1
 
 ping 192.168.200.1
 
-- Untuk memastikan koneksi jaringan antar VM berhasil.
+Untuk memastikan koneksi jaringan antar VM berhasil.
 
 ![image](https://github.com/user-attachments/assets/52a533e5-1d09-440c-876b-3a9e9ec9e2c7)
 
