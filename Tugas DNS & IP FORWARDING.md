@@ -32,10 +32,10 @@ Contoh: Jika kamu mengakses website dari laptop di rumahmu, router rumahmu akan 
 
 Setting network adapter 1 menjadi bridge dan adapter 2 menjadi internet.
 
-·  Adapter 1 = Bridge:
+-  Adapter 1 = Bridge:
 Agar VM1 bisa terhubung langsung ke jaringan fisik (misalnya internet rumah), seperti layaknya perangkat biasa.
 
-·  Adapter 2 = Internal:
+-  Adapter 2 = Internal:
 Digunakan untuk membuat jaringan lokal (LAN) antara VM1 dan VM2, sehingga mereka bisa saling berkomunikasi tanpa keluar ke internet.
 
 ![image](https://github.com/user-attachments/assets/8cf86e80-bfab-4cf9-a14b-7d3ab11041ba)
@@ -46,9 +46,9 @@ Install requirement
 
 Sudo apt install bind9 bind9utils
 
-·  BIND9: Software DNS yang paling umum di Linux.
+-  BIND9: Software DNS yang paling umum di Linux.
 
-·  bind9utils: Tools tambahan untuk cek konfigurasi DNS.
+-  bind9utils: Tools tambahan untuk cek konfigurasi DNS.
 
 ![image](https://github.com/user-attachments/assets/d367f74b-067e-4eb0-ad0a-8538753e582a)
 
@@ -96,11 +96,11 @@ allow-transfer { any; };
 
 recursion yes;
 
-·  allow-query: Mengizinkan semua klien untuk meminta DNS.
+-  allow-query: Mengizinkan semua klien untuk meminta DNS.
 
-·  allow-transfer: Mengizinkan transfer zona (berguna untuk slave DNS, jika ada).
+-  allow-transfer: Mengizinkan transfer zona (berguna untuk slave DNS, jika ada).
 
-·  recursion: Mengaktifkan pencarian DNS berantai (jika VM1 tidak tahu, dia cari tahu ke DNS lain).
+-  recursion: Mengaktifkan pencarian DNS berantai (jika VM1 tidak tahu, dia cari tahu ke DNS lain).
 
 ![image](https://github.com/user-attachments/assets/f08725c9-c5a6-45bc-a37d-51979a7d962f)
 
