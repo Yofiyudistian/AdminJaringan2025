@@ -1,4 +1,4 @@
-1. Protokol mail (SMTP, POP3, IMAP, POP3S)
+### 1. Protokol mail (SMTP, POP3, IMAP, POP3S)
 
 **SMTP (Simple Mail Transfer Protocol)**
 
@@ -30,7 +30,7 @@
 - **Port default:** 995
 - **Bedanya dengan POP3:** Data dienkripsi untuk keamanan selama transmisi.
 
-1. informasi mail server dalam sebuah domain
+## 2. informasi mail server dalam sebuah domain
 
 informasi mail server dalam sebuah domain disebut **MX Record** (Mail Exchange Record). Ini adalah bagian dari DNS (Domain Name System) yang menunjukkan server mana yang menangani email untuk domain tersebut.
 
@@ -48,6 +48,7 @@ informasi mail server dalam sebuah domain disebut **MX Record** (Mail Exchange R
 - Nama host tersebut **harus memiliki A record atau AAAA record** (agar bisa diubah jadi IP).
 - MX record diperlukan agar email dari luar bisa dikirim ke domain kamu.
 
+## 3. Penjelasan gambar
 ![image](https://github.com/user-attachments/assets/f27c3720-2546-49f0-845d-ba782d937d98)
 
 
